@@ -1,0 +1,42 @@
+<apex:page controller="CountryStatePicker">
+   <apex:form >
+       <!--it calls a controller action-->
+       <!--rerenderStates or stateSelectList are the names of functions that executes-->
+       <!--when they execute at the onchange event-->
+       <!--and then the component statesSelectList -set in rerender- is refreshed-->
+      <apex:actionFunction name="rerenderStates" rerender="statesSelectList" >
+          <!--assignTo assigns the value of the the param to a variable i.e country defined in controller-->
+          <apex:param name="firstParam" assignTo="{!country}" value="" />
+      </apex:actionFunction>
+
+   <table><tbody>
+      <tr>
+        <th>Country</th>
+          <td>
+              <!--selectoption gets its values from countriesselectlist defined in controller-->
+              <!--onchange event calls the method rerenderStates, defined in actionFunction, with 
+				param as the corresponding value of the option selected -->
+              
+             <apex:selectList id="country" styleclass="std" size="1" 
+                value="{!country}" onChange="rerenderStates(this.value)">
+                 	<!--selectOptions' value is associated with the controller's variable countriesSelectList
+					of type selectoption-->
+                    <apex:selectOptions value="{!countriesSelectList}"/>
+             </apex:selectList>
+          </td>
+      </tr>
+      <tr id="state_input">
+        <th>State/Province</th>
+          <td>
+            <apex:selectList id="statesSelectList" styleclass="std" size="1" 
+                 value="{!state}">
+                <!--stateselectlist controller method is called 
+				everytime the actionfunction is executed and it rerenders 
+				this component statesselectlist-->
+                   <apex:selectOptions value="{!statesSelectList}"/>
+            </apex:selectList>
+          </td>
+      </tr>
+   </tbody></table>
+   </apex:form>
+</apex:page>
